@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'dashboard', views.dashboard, name="dashboard"),
     url(r'client/liste', views.liste, name="listeClient"),
     url(r'client/index', views.ClientIndex, name="clientIndex"),
+    url(r'client/search', views.ClientAjaxSearch, name="clientAjaxSearch"),
     url(r'^client/modifier/(?P<idClient>[0-9]+)', views.ClientModifier, name='modifier'),
 
 ]

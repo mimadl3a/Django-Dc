@@ -22,7 +22,7 @@ def liste(request):
 
 
 def ClientIndex(request):
-    messages.add_message(request, messages.INFO, 'Modification valide !')
+    
     #clients = Client.objects.all()
     listeClient = Client.objects.all()
     paginator = Paginator(listeClient, 5) # Show 25 contacts per page
@@ -36,8 +36,16 @@ def ClientIndex(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         clients = paginator.page(paginator.num_pages)
-        
-    return render_to_response("Commercial/html/Client/index.html", {'liste':clients})
+    return render_to_response("Commercial/html/Client/index.html", {'liste':clients},
+                              context_instance=RequestContext(request))
+
+
+
+def ClientAjaxSearch(request):
+    listeClient = Client.objects.all()
+    
+    return render_to_response("Commercial/html/Client/index.html", {'liste':listeClient},
+                              context_instance=RequestContext(request))
 
 
 
