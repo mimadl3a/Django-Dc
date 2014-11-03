@@ -22,9 +22,14 @@ def liste(request):
 
 
 def ClientIndex(request):
-    
+    return render_to_response("Commercial/html/Client/index.html",
+                              context_instance=RequestContext(request))
+
+
+
+def ClientAjaxSearch(request):
     #clients = Client.objects.all()
-    listeClient = Client.objects.all()
+    listeClient = Client.objects.all().filter(nom__contains = request.POST['info'])
     paginator = Paginator(listeClient, 5) # Show 25 contacts per page
     page = request.GET.get('page')
     
@@ -36,15 +41,8 @@ def ClientIndex(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         clients = paginator.page(paginator.num_pages)
-    return render_to_response("Commercial/html/Client/index.html", {'liste':clients},
-                              context_instance=RequestContext(request))
-
-
-
-def ClientAjaxSearch(request):
-    listeClient = Client.objects.all()
     
-    return render_to_response("Commercial/html/Client/index.html", {'liste':listeClient},
+    return render_to_response("Commercial/html/Client/liste.html", {'liste':clients},
                               context_instance=RequestContext(request))
 
 
