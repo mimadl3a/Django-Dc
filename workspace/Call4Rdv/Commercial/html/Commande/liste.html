@@ -1,16 +1,16 @@
 <table class="table">
 	<tr>
-		<td>Nom & prénom</td>
 		<td>Code</td>
-		<td>Email</td>
+		<td>Nom & prénom</td>
+		<td>Date commande</td>
 		<td>Action</td>
 	</tr>
-	{% for client in liste %}
+	{% for data in liste %}
 	<tr>
-		<td>{{ client.nom }} {{ client.prenom }}</td>
-		<td>{{ client.code }}</td>
-		<td>{{ client.email }}</td>
-		<td><a href="{% url 'modifierClient' idClient=client.id %}"
+		<td>{{ data.code }}</td>
+		<td>{{ data.client }}</td>
+		<td>{{ data.dateCommande|date:'d-m-Y' }}</td>
+		<td><a href="{% url 'modifierCommande' idCommande=data.id %}"
 			class="btn btn-primary btn-sm">Modifier</a></td>
 	</tr>
 	{% endfor %}

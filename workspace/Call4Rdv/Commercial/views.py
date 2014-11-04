@@ -1,8 +1,8 @@
 from django.shortcuts import render_to_response, redirect
 from django.http.response import HttpResponse
-from Commercial.models import Client
+from Commercial.models import Client, Commande
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from Commercial.forms import ClientForm, LoginForm
+from Commercial.forms import ClientForm, LoginForm, CommandeForm
 from django.template.context import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
@@ -91,7 +91,7 @@ def ClientAjaxSearch(request):
                               context_instance=RequestContext(request))
 
 
-
+@login_required(login_url='/login/step1')
 def ClientModifier(request, idClient):
     
     client = Client.objects.get(pk = idClient)
@@ -106,11 +106,79 @@ def ClientModifier(request, idClient):
     return render_to_response("Commercial/html/Client/modifier.html", 
                               {'formulaire':formulaire},
                               context_instance=RequestContext(request))
+    
+    
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+@login_required(login_url='/login/step1')
+def CommandeIndex(request):
+    return render_to_response("Commercial/html/Commande/index.html",context_instance=RequestContext(request))
+
+
+
+
+def CommandeAjaxSearch(request):
+    #clients = Client.objects.all()
+    listeCommande = Commande.objects.all().filter(code__contains = request.POST['info'])
+    paginator = Paginator(listeCommande, 5) # Show 25 contacts per page
+    page = request.GET.get('page')
+    
+    try:
+        liste = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        liste = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        liste = paginator.page(paginator.num_pages)
+    
+    return render_to_response("Commercial/html/Commande/liste.html", {'liste':liste},
+                              context_instance=RequestContext(request))
+
+
+@login_required(login_url='/login/step1')
+def CommandeModifier(request, idCommande):
+    
+    commande = Commande.objects.get(pk = idCommande)
+    formulaire = CommandeForm(instance = commande)
+    
+    if request.method == 'POST':
+        if formulaire.is_valid:
+            f = CommandeForm(request.POST, request.FILES, instance = commande)
+            f.save()
+            messages.add_message(request, messages.INFO, 'Modification valide !')
+            return redirect(reverse(CommandeIndex))
+    return render_to_response("Commercial/html/Commande/modifier.html", 
+                              {'formulaire':formulaire},
+                              context_instance=RequestContext(request))
+    
+
+@login_required(login_url='/login/step1')
+def CommandeCreate(request):
+    formulaire = CommandeForm()
+    
+    if request.method == 'POST':
+        if formulaire.is_valid:
+            f = CommandeForm(request.POST, request.FILES)
+            f.save()
+            messages.add_message(request, messages.INFO, 'Commande cr&eacute;e !')
+            return redirect(reverse(CommandeIndex))
+    return render_to_response("Commercial/html/Commande/ajouter.html", 
+                              {'formulaire':formulaire},
+                              context_instance=RequestContext(request))
+    
+    
 
 

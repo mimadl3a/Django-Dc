@@ -160,8 +160,8 @@
                     <li {% if 'client' in request.get_full_path %}class="active" {% endif %}>
                         <a href="{% url 'clientIndex' %}"><i class="fa fa-user"></i> Gestion des clients</a>
                     </li>
-                    <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                    <li {% if 'commande' in request.get_full_path %}class="active" {% endif %}>
+                        <a href="{% url 'commandeIndex' %}"><i class="fa fa-fw fa-shopping-cart"></i> Gestion des commandes</a>
                     </li>
                     <li>
                         <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>

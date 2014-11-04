@@ -28,3 +28,6 @@ class Commande(models.Model):
     plageHoraire = models.TextField(null = False)
     client = models.ForeignKey(Client)
     
+    def __unicode__(self):
+        return self.code+" "+self.dateCommande.strftime('%Y-%m-%d')
+    
