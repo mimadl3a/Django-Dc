@@ -18,21 +18,24 @@
 
 <div class="col-md-12">
 	<ul class="pagination">
-	
+		<!-- 
 		{% if liste.has_previous %}
 			<li><a href="?page={{ liste.previous_page_number }}">Precedent</a></li>
 		{% endif %}
+		-->
 		
 		{% for i in liste.paginator.page_range %}
 			{% if i == liste.number %}
-				<li class="active"><a href="?page={{ i }}">{{ i }}</a></li>
+				<li><a href="?page={{ i }}">{{ i }}</a></li>
 			{% else %}
 				<li><a href="?page={{ i }}">{{ i }}</a></li>
 			{% endif %}
 		{% endfor %}
 
+		<!-- 
 		{% if liste.has_next %}
 			<li><a href="?page={{ liste.next_page_number }}">Suivant</a></li>
 		{% endif %}
+		 -->
 	</ul>
 </div>

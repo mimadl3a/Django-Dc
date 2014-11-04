@@ -154,10 +154,10 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active">
+                    <li {% if 'dashboard' in request.get_full_path %}class="active" {% endif %}>
                         <a href="{% url 'dashboard' %}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <li>
+                    <li {% if 'client' in request.get_full_path %}class="active" {% endif %}>
                         <a href="{% url 'clientIndex' %}"><i class="fa fa-user"></i> Gestion des clients</a>
                     </li>
                     <li>

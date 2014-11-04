@@ -56,7 +56,8 @@ def Mlogout(request):
 
 
 def dashboard(request):
-    return render_to_response("Commercial/html/dashboard.html")
+    return render_to_response("Commercial/html/dashboard.html",
+                              context_instance=RequestContext(request))
 
 
 
