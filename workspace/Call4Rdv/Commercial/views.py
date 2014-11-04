@@ -2,12 +2,56 @@ from django.shortcuts import render_to_response, redirect
 from django.http.response import HttpResponse
 from Commercial.models import Client
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from Commercial.forms import ClientForm
+from Commercial.forms import ClientForm, LoginForm
 from django.template.context import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
+
+
+def Mlogin(request):
+    #INIT FORM TO TEMPLATE
+    form = LoginForm()
+    
+    #IF DATA IS SENT
+    if request.method == 'POST':
+        #PASS DATA FORM LOGIN FORM TO HANDLE IT
+        form = LoginForm(data = request.POST)
+        if form.is_valid():
+            login1 = request.POST['username']
+            pass1 = request.POST['password']
+            
+            user = authenticate(username=login1, password=pass1)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect(reverse(ClientIndex))
+            else:
+                messages.add_message(request, messages.INFO, "Utilisateur introuvable")
+                return redirect(reverse(Mlogin))
+        else:
+            messages.add_message(request, messages.INFO, "Formulaire invalide")
+            
+    
+    return render_to_response("Commercial/html/Login/index.html",{'formulaire':form},
+                              context_instance=RequestContext(request))
+
+
+def Mlogout(request):
+    logout(request)
+    messages.add_message(request, messages.INFO, "A bientot !")
+    return redirect(reverse(Mlogin))
+    
+
+
+
+
+
+
+
 
 
 
@@ -20,7 +64,7 @@ def liste(request):
     return HttpResponse("hello")
     
 
-
+@login_required(login_url='/login/step1')
 def ClientIndex(request):
     return render_to_response("Commercial/html/Client/index.html",
                               context_instance=RequestContext(request))
