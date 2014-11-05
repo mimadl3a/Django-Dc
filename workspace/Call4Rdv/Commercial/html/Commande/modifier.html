@@ -1,7 +1,12 @@
 {% extends 'Commercial/html/templates/base.html' %}
-
+{% load staticfiles %}
 
 {% block contenu %}
+
+	<script src="{% static 'plugins/ckeditor/ckeditor.js' %}"></script>
+	<script src="{% static 'plugins/ckeditor/adapters/jquery.js' %}"></script>
+			
+	
 <div class="container-fluid">
 	
 	
@@ -41,6 +46,7 @@
 			{% load crispy_forms_tags %}
 			{% crispy formulaire %}
 		</div>
+		
 	</div>
 	
 	

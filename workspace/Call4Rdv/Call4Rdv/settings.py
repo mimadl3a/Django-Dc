@@ -95,9 +95,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
+
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 STATIC_URL = '/static/'
+
+
 
 TEMPLATE_DIRS = (
  '/home/imad/workspace/Call4Rdv/',

@@ -7,6 +7,7 @@ urlpatterns = [
     # url(r'^$', 'Call4Rdv.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     
+    
     url(r'^login/', include(login_urls)),
     
     url(r'^commercial/', include(urls)),    

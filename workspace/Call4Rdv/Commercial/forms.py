@@ -4,6 +4,7 @@ from Commercial.models import Client, Commande
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder
 from django import forms
+from suit_ckeditor.widgets import CKEditorWidget
 
 
 class ClientForm(ModelForm):
@@ -31,6 +32,39 @@ def get_form_cmd(liste, *args):
             #fields = ['code','dateCommande','dateReglement']
             fields = '__all__'
             exclude = liste
+            widgets = {
+                'script': CKEditorWidget(editor_options={
+                                'toolbar': [
+                                                [
+                                                  'Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList',
+                                                  'UIColor','NumberedList','BulletedList','-','Outdent','Indent','-'
+                                                  ,'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'
+                              
+                                                ]
+                                            ]
+                                                         }),
+                'objections': CKEditorWidget(editor_options={
+                                'toolbar': [
+                                                [
+                                                  'Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList',
+                                                  'UIColor','NumberedList','BulletedList','-','Outdent','Indent','-'
+                                                  ,'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'
+                              
+                                                ]
+                                            ]
+                                                         }),
+                'plageHoraire': CKEditorWidget(editor_options={
+                                'toolbar': [
+                                                [
+                                                  'Bold', 'Italic', 'Underline', '-', 'NumberedList', 'BulletedList',
+                                                  'UIColor','NumberedList','BulletedList','-','Outdent','Indent','-'
+                                                  ,'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'
+                              
+                                                ]
+                                            ]
+                                                         })
+            }
+            
         
     return CommandeForm
         
@@ -63,27 +97,8 @@ class ExampleForm(forms.Form):
         initial = '1',
         required = True,
     )
-    favorite_food = forms.CharField(
-        label = "What is your favorite food?",
-        max_length = 80,
-        required = True,
-    )
-
-    favorite_color = forms.CharField(
-        label = "What is your favorite color?",
-        max_length = 80,
-        required = True,
-    )
-
-    favorite_number = forms.IntegerField(
-        label = "Favorite number",
-        required = False,
-    )
-
-    notes = forms.CharField(
-        label = "Additional notes or feedback",
-        required = False,
-    )
+    
+    
     def __init__(self, *args, **kwargs):
         super(ExampleForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
