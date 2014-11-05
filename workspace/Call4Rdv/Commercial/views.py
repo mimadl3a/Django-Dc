@@ -2,7 +2,8 @@ from django.shortcuts import render_to_response, redirect
 from django.http.response import HttpResponse
 from Commercial.models import Client, Commande
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from Commercial.forms import ClientForm, LoginForm, CommandeForm
+from Commercial.forms import ClientForm, LoginForm, ExampleForm,\
+    get_form_cmd
 from django.template.context import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
@@ -152,31 +153,37 @@ def CommandeAjaxSearch(request):
 def CommandeModifier(request, idCommande):
     
     commande = Commande.objects.get(pk = idCommande)
-    formulaire = CommandeForm(instance = commande)
-    
+    f = get_form_cmd([''])
+    formulaire = f(instance = commande)
+        
     if request.method == 'POST':
         if formulaire.is_valid:
-            f = CommandeForm(request.POST, request.FILES, instance = commande)
-            f.save()
+            form = f(request.POST, request.FILES, instance = commande)
+            form.save()
             messages.add_message(request, messages.INFO, 'Modification valide !')
             return redirect(reverse(CommandeIndex))
     return render_to_response("Commercial/html/Commande/modifier.html", 
                               {'formulaire':formulaire},
                               context_instance=RequestContext(request))
-    
+
 
 @login_required(login_url='/login/step1')
 def CommandeCreate(request):
-    formulaire = CommandeForm()
+    
+    mform = ExampleForm()
+        
+    f = get_form_cmd(['dateReglement','preuveReglement'])
+    formulaire = f()
+    
     
     if request.method == 'POST':
         if formulaire.is_valid:
-            f = CommandeForm(request.POST, request.FILES)
-            f.save()
+            form = f(request.POST, request.FILES)
+            form.save()
             messages.add_message(request, messages.INFO, 'Commande cr&eacute;e !')
             return redirect(reverse(CommandeIndex))
     return render_to_response("Commercial/html/Commande/ajouter.html", 
-                              {'formulaire':formulaire},
+                              {'formulaire':formulaire, 'mform':mform},
                               context_instance=RequestContext(request))
     
     

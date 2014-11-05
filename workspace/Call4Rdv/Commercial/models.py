@@ -18,8 +18,8 @@ class Client(models.Model):
 class Commande(models.Model):
     code = models.CharField(max_length=255, null = False)
     dateCommande = models.DateTimeField(null = False)
-    dateReglement = models.DateTimeField(null = False)
-    preuveReglement =models.CharField(max_length = 255, null = False)
+    dateReglement = models.DateTimeField(null = True)
+    preuveReglement =models.CharField(max_length = 255, null = True)
     totalTTC = models.FloatField(null = False)
     script = models.TextField(null = False)
     nbrRdv = models.IntegerField(null = False)
