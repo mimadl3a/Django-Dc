@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+import boto
+from postman.__main__ import out
 
 # Create your views here.
 
@@ -199,17 +201,26 @@ def CommandeCreate(request):
 
 @login_required(login_url='/login/step1')
 def CalendrierIndex(request):
-    data = """
-                            {
-                                    title: 'All Day Event',
-                                    start: new Date(y, m, 1)
-                            },
-                            {
-                                    title: 'Long Event',
-                                    start: new Date(y, m, d-5),
-                                    end: new Date(y, m, d-2)
-                            }
-        """
+    
+    #ses = boto.connect_ses("key1", "key2")
+    
+    #msg = "test"
+    #r = ses.send_raw_email("rhdatacv@gmail.com", msg, "rhdatacv@gmail.com")
+    #if r.get("SendRawEmailResponse", {}).get("SendRawEmailResult", {}).get("MessageId"):
+        #out("OK", args)
+    #    return ""
+    #else:
+    #    return ""
+        #out("ERROR: %s" % r, args)
+    
+    
+    
+    liste_event = Calendrier.objects.all()
+    data = """ """
+    for event in liste_event:
+        data += "{title: '"+event.title+"', start:'"+event.start+"', end:'"+event.end+"'},"
+        
+        
     return render_to_response("Commercial/html/Calendrier/index.html", 
                               {'data':data},
                               context_instance=RequestContext(request))
@@ -222,7 +233,7 @@ def CalendrierAjaxSave(request):
     date2 = request.POST.get('date2')
     
     c = Calendrier(title = titre, description = descr, start = date1, end = date2)
-    c.save
+    c.save()
     
     return HttpResponse("ok")
 

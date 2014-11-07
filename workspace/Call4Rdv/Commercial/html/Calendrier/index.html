@@ -81,7 +81,12 @@
 <script>
 
 $("#valider").click(function(){
-	ajouter('test','test','test', 'test');
+	ajouter(
+			$('#newevent_name').val(),
+			$('#newevent_desc').val(),
+			$('#dateT').val(),
+			$('#dateF').val()
+			);
 });
 function ajouter(titre,descr,date1, date2) {
 	$("#progBar").show();
@@ -91,7 +96,6 @@ function ajouter(titre,descr,date1, date2) {
 		data: { titre: titre, descr: descr, date1: date1, date2: date2, csrfmiddlewaretoken : $("input[name=csrfmiddlewaretoken]").val() },
 		success: function(data){
 			$("#progBar").hide();
-			alert(data);
 			window.location.href = "{% url 'calendrierIndex' %}?stat=new&defaultDate="+date1;
 		},
 		dataType: "html"
