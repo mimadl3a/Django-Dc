@@ -27,6 +27,8 @@
     <link href="{% static "font-awesome-4.1.0/css/font-awesome.min.css" %}" rel="stylesheet">
 
     
+    <!-- jQuery -->
+    <script src="{% static "js/jquery.js" %}""></script>
 
 </head>
 
@@ -164,7 +166,7 @@
                         <a href="{% url 'commandeIndex' %}"><i class="fa fa-fw fa-shopping-cart"></i> Gestion des commandes</a>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                        <a href="{% url 'calendrierIndex' %}"><i class="fa fa-calendar"></i> Mon calendrier</a>
                     </li>
                     <li>
                         <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
@@ -201,16 +203,11 @@
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="{% static "js/jquery.js" %}""></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static "js/bootstrap.js" %}""></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="js/plugins/morris/raphael.min.js"></script>
-    <script src="js/plugins/morris/morris.min.js"></script>
-    <script src="js/plugins/morris/morris-data.js"></script>
+    
 
 </body>
 

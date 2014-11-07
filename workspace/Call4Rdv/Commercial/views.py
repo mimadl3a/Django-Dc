@@ -1,9 +1,8 @@
 from django.shortcuts import render_to_response, redirect
 from django.http.response import HttpResponse
-from Commercial.models import Client, Commande
+from Commercial.models import Client, Commande, Calendrier
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from Commercial.forms import ClientForm, LoginForm, ExampleForm,\
-    get_form_cmd
+from Commercial.forms import ClientForm, LoginForm, get_form_cmd
 from django.template.context import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
@@ -99,11 +98,16 @@ def ClientModifier(request, idClient):
     formulaire = ClientForm(instance = client)
     
     if request.method == 'POST':
-        if formulaire.is_valid:
+        
+        if formulaire.is_valid:            
             f = ClientForm(request.POST, request.FILES, instance = client)
             f.save()
             messages.add_message(request, messages.INFO, 'Modification valide !')
             return redirect(reverse(ClientIndex))
+        else:
+            messages.add_message(request, messages.INFO, 'Modification invalide !')
+            return redirect(reverse(ClientIndex))
+        
     return render_to_response("Commercial/html/Client/modifier.html", 
                               {'formulaire':formulaire},
                               context_instance=RequestContext(request))
@@ -170,7 +174,7 @@ def CommandeModifier(request, idCommande):
 @login_required(login_url='/login/step1')
 def CommandeCreate(request):
     
-    mform = ExampleForm()
+    #mform = ExampleForm()
         
     f = get_form_cmd(['dateReglement','preuveReglement'])
     formulaire = f()
@@ -183,9 +187,52 @@ def CommandeCreate(request):
             messages.add_message(request, messages.INFO, 'Commande cr&eacute;e !')
             return redirect(reverse(CommandeIndex))
     return render_to_response("Commercial/html/Commande/ajouter.html", 
-                              {'formulaire':formulaire, 'mform':mform},
+                              {'formulaire':formulaire},
                               context_instance=RequestContext(request))
     
     
+
+
+
+
+
+
+@login_required(login_url='/login/step1')
+def CalendrierIndex(request):
+    data = """
+                            {
+                                    title: 'All Day Event',
+                                    start: new Date(y, m, 1)
+                            },
+                            {
+                                    title: 'Long Event',
+                                    start: new Date(y, m, d-5),
+                                    end: new Date(y, m, d-2)
+                            }
+        """
+    return render_to_response("Commercial/html/Calendrier/index.html", 
+                              {'data':data},
+                              context_instance=RequestContext(request))
+
+
+def CalendrierAjaxSave(request):
+    titre = request.POST.get('titre')
+    descr = request.POST.get('descr')
+    date1 = request.POST.get('date1')
+    date2 = request.POST.get('date2')
+    
+    c = Calendrier(title = titre, description = descr, start = date1, end = date2)
+    c.save
+    
+    return HttpResponse("ok")
+
+
+
+
+
+
+
+
+
 
 

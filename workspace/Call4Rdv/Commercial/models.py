@@ -3,13 +3,13 @@ from django.db import models
 # Create your models here.
 
 class Client(models.Model):
-    nom = models.CharField(max_length=255, null = False)
-    prenom = models.CharField(max_length=255, null = False)
-    code = models.CharField(max_length=255, null = False)
-    rasinSociale = models.CharField(max_length=255, null = False)
-    email = models.CharField(max_length=255, null = False)
-    adresse = models.CharField(max_length=255, null = False)
-    
+    nom = models.CharField(max_length=255, null = False, default = "")
+    prenom = models.CharField(max_length=255, null = False, default = "", blank=True)
+    code = models.CharField(max_length=255, null = False, default = "")
+    raisonSociale = models.CharField(max_length=255, null = True, default = "", blank=True)
+    email = models.CharField(max_length=255, null = False, default = "")
+    adresse = models.CharField(max_length=255, null = False, default = "")
+                
     def __unicode__(self):
         return self.nom+" "+self.prenom
     
@@ -30,4 +30,21 @@ class Commande(models.Model):
     
     def __unicode__(self):
         return self.code+" "+self.dateCommande.strftime('%Y-%m-%d')
+    
+    
+    
+    
+class Calendrier(models.Model):
+    title = models.CharField(max_length=255, null = False, default = "")
+    description = models.CharField(max_length=255, null = False, default = "")
+    start = models.CharField(max_length=255, null = False, default = "")
+    end = models.CharField(max_length=255, null = False, default = "")
+    
+    def __unicode__(self):
+        return self.title
+    
+    
+    
+    
+    
     

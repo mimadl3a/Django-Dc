@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     #'debug_toolbar.apps.DebugToolbarConfig',
     'crispy_forms',
+    'fullcalendar',
 )
 
 MIDDLEWARE_CLASSES = (

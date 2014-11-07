@@ -24,5 +24,10 @@ urlpatterns = [
     url(r'commande/search', views.CommandeAjaxSearch, name="commandeAjaxSearch"),
     url(r'commande/modifier/(?P<idCommande>[0-9]+)', views.CommandeModifier, name='modifierCommande'),
     
+    
+    
+    url(r'calendrier/index', views.CalendrierIndex, name="calendrierIndex"),
+    url(r'calendrier/ajaxSave', views.CalendrierAjaxSave, name="calendrierAjaxSave"),
+    
 
 ]
