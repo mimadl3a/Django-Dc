@@ -1,0 +1,41 @@
+<table class="table">
+	<tr>
+		<td>Nom & prénom</td>
+		<td>Code</td>
+		<td>Email</td>
+		<td>Action</td>
+	</tr>
+	{% for client in liste %}
+	<tr>
+		<td>{{ client.nom }} {{ client.prenom }}</td>
+		<td>{{ client.code }}</td>
+		<td>{{ client.email }}</td>
+		<td><a href="{% url 'modifierClient' idClient=client.id %}"
+			class="btn btn-primary btn-sm">Modifier</a></td>
+	</tr>
+	{% endfor %}
+</table>
+
+<div class="col-md-12">
+	<ul class="pagination">
+		<!-- 
+		{% if liste.has_previous %}
+			<li><a href="?page={{ liste.previous_page_number }}">Precedent</a></li>
+		{% endif %}
+		-->
+		
+		{% for i in liste.paginator.page_range %}
+			{% if i == liste.number %}
+				<li><a href="?page={{ i }}">{{ i }}</a></li>
+			{% else %}
+				<li><a href="?page={{ i }}">{{ i }}</a></li>
+			{% endif %}
+		{% endfor %}
+
+		<!-- 
+		{% if liste.has_next %}
+			<li><a href="?page={{ liste.next_page_number }}">Suivant</a></li>
+		{% endif %}
+		 -->
+	</ul>
+</div>

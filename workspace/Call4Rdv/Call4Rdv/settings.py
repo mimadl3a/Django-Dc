@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Commercial',
+    'Manager',
     'widget_tweaks',
     #'debug_toolbar.apps.DebugToolbarConfig',
     'crispy_forms',

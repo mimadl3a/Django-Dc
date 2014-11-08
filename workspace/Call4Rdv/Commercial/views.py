@@ -227,6 +227,7 @@ def CalendrierIndex(request):
 
 
 def CalendrierAjaxSave(request):
+    
     titre = request.POST.get('titre')
     descr = request.POST.get('descr')
     date1 = request.POST.get('date1')

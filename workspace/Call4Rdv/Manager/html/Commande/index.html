@@ -1,0 +1,120 @@
+{% extends 'Commercial/html/templates/base.html' %}
+
+
+{% block contenu %}
+<div class="container-fluid">
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">
+				Gestion des commandes <span id="spinner"
+					style="font-size: 20px; display: none"
+					class="fa fa-spinner fa-spin"></span>
+					<div class="pull-right">
+						<a href="{% url 'commandeCreate' %}" class="btn btn-warning ">
+							<span class="fa fa-shopping-cart"></span>&nbsp;
+							Créer une commande
+						</a>
+						
+					</div>
+			</h1>
+		</div>
+
+		<div class="col-lg-12">
+			<ol class="breadcrumb">
+				<li class="active">Gestion des commandes /</li>
+			</ol>
+		</div>
+	</div>
+	
+	<div class="">
+		<div class="col-lg-12">
+			<div class="row alert bg-primary">
+				<div class="col-lg-2">
+					<span class="fa fa-search fa-2x"></span>&nbsp;
+					<label>Filtrer par: </label>
+				</div>
+				
+				<div class="col-lg-8">
+					<input placeholder="Code commande, Code client" class="form-control" id="info" type="text">
+				</div>
+				
+				
+				<div class="col-lg-2">                                           
+					<button class="btn btn-default pull-right" id="rechercher">Rechercher</button>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
+	<div class="row">
+	
+	
+		{% if messages %}
+			<div class="col-md-12 alert alert-warning">
+			    {% for message in messages %}
+			    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
+			    {% endfor %}
+			</div>
+		{% endif %}
+	
+	
+		<div class="col-lg-12" id="divi">
+			
+		</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+</div>
+
+
+{% csrf_token %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+	$(document).ready(function() {
+		afficher();
+	});
+	function afficher(){
+		$("#divi").html('<div class="row"></div><div class="well"><span class="fa fa-spinner fa-spin fa-2x"></span> Chargement en cours..</div>');
+		$.ajax({
+			type: "POST",
+			url: "{% url 'commandeAjaxSearch' %}",
+			data: { info: $('#info').val(), page: 1, csrfmiddlewaretoken : $("input[name=csrfmiddlewaretoken]").val() },
+			success: function(data){
+				$('#spinner').hide();
+				$("#divi").html(data);
+			},
+			dataType: "html"
+		});
+	}
+	
+	$('#rechercher').click(function(){
+		$('#spinner').show();
+		$.ajax({
+			type: "POST",
+			url: "{% url 'commandeAjaxSearch' %}",
+			data: { info: $('#info').val(), page: 1, csrfmiddlewaretoken : $("input[name=csrfmiddlewaretoken]").val() },
+			success: function(data){
+				$('#spinner').hide();
+				$("#divi").html(data);
+			},
+			dataType: "html"
+		});
+	});
+</script>
+
+
+
+
+{% endblock %}
