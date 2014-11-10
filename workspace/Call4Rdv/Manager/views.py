@@ -1,7 +1,12 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from Manager.models import Commercial
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from Manager.forms import CommercialForm, RegistrationForm
+from django.core.urlresolvers import reverse
+from exceptions import Exception
+from django.contrib import messages
+from django.views import generic
 
 # Create your views here.
 
@@ -30,14 +35,58 @@ def ManagerSearchCommercial(request):
     return render_to_response("Manager/html/Commercial/liste.html", {'liste':liste},
                               context_instance=RequestContext(request))
 
+class RegisterCommercial(generic.CreateView):
+    form_class = RegistrationForm
+    model = Commercial
+    template_name = "Manager/html/Commercial/ajouter.html"
+    
+    
+class UpdateRegisteredCommercial(generic.UpdateView):
+    form_class = RegistrationForm
+    model = Commercial
+    template_name = "Manager/html/Commercial/modifier.html"
+
+    
+    
+    
+
 
 def ManagerCreateCommercial(request):
-    return ""
+    formulaire = CommercialForm()
+    if request.method == 'POST':
+        if formulaire.is_valid:
+            form = CommercialForm(request.POST)
+            form.save()
+            messages.add_message(request, messages.INFO, 'Commercial cr&eacute;e !')
+            return redirect(reverse('indexCommercial'))
+        
+    return render_to_response("Manager/html/Commercial/ajouter.html", {'formulaire':formulaire},
+                              context_instance=RequestContext(request))
 
 
-def ManagerUpdateCommercial(request):
-    return ""
+def ManagerUpdateCommercial(request, idCommercial):
+    commercial = Commercial.objects.get(pk = idCommercial)
+    formulaire = CommercialForm(instance = commercial)
+    if request.method == 'POST':
+        if formulaire.is_valid:
+            form = CommercialForm(request.POST, instance = commercial)
+            try:
+                form.save()
+                messages.add_message(request, messages.INFO, "Sauvegarde ok !")
+            except Exception as e:
+                messages.add_message(request, messages.INFO, _(e.message))
+                #return HttpResponse(e.message)
+                #return redirect(reverse('indexCommercial'))
+            
+    
+    return render_to_response("Manager/html/Commercial/modifier.html",{'formulaire':formulaire},
+                              context_instance=RequestContext(request))
 
 
 def ManagerDeleteCommercial(request):
     return ""
+
+
+
+
+
