@@ -6,7 +6,7 @@
 	</tr>
 	{% for data in liste %}
 	<tr>
-		<td>{{ data.first_name }} {{ data.last_name }}</td>
+		<td>{{ data.nom }} {{ data.last_name }}</td>
 		<td>{{ data.email }}</td>
 		<td><a href="{% url 'updateCommercial' pk=data.id %}"
 			class="btn btn-primary btn-sm">Modifier</a></td>

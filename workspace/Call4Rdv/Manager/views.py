@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from Manager.models import Commercial
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from Manager.forms import CommercialForm, RegistrationForm
+from Manager.forms import CommercialForm, RegistrationForm, CommercialUpdateForm
 from django.core.urlresolvers import reverse
 from exceptions import Exception
 from django.contrib import messages
@@ -39,14 +39,17 @@ class RegisterCommercial(generic.CreateView):
     form_class = RegistrationForm
     model = Commercial
     template_name = "Manager/html/Commercial/ajouter.html"
-    
+    #success_url = reverse(ManagerIndexCommercial);
+
+
     
 class UpdateRegisteredCommercial(generic.UpdateView):
     form_class = RegistrationForm
     model = Commercial
     template_name = "Manager/html/Commercial/modifier.html"
+    #success_url = reverse(ManagerIndexCommercial);
 
-    
+
     
     
 
@@ -64,17 +67,21 @@ def ManagerCreateCommercial(request):
                               context_instance=RequestContext(request))
 
 
+
+
 def ManagerUpdateCommercial(request, idCommercial):
     commercial = Commercial.objects.get(pk = idCommercial)
-    formulaire = CommercialForm(instance = commercial)
+    formulaire = CommercialUpdateForm(instance = commercial)
+    
     if request.method == 'POST':
         if formulaire.is_valid:
-            form = CommercialForm(request.POST, instance = commercial)
+            form = CommercialUpdateForm(request.POST, instance = commercial)
             try:
                 form.save()
                 messages.add_message(request, messages.INFO, "Sauvegarde ok !")
+                return redirect(reverse('indexCommercial'))
             except Exception as e:
-                messages.add_message(request, messages.INFO, _(e.message))
+                messages.add_message(request, messages.INFO, e.message)
                 #return HttpResponse(e.message)
                 #return redirect(reverse('indexCommercial'))
             

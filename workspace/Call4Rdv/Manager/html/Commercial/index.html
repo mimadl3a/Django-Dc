@@ -14,8 +14,7 @@
 						<a href="{% url 'createCommercial' %}" class="btn btn-warning ">
 							<span class="fa fa-shopping-cart"></span>&nbsp;
 							Créer un nouveau commercial
-						</a>
-						
+						</a>						
 					</div>
 			</h1>
 		</div>
@@ -55,11 +54,13 @@
 	
 	
 		{% if messages %}
-			<div class="col-md-12 alert alert-warning">
+		<div class="col-md-12">
+			<div class="alert alert-warning">
 			    {% for message in messages %}
 			    <div{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</div>
 			    {% endfor %}
 			</div>
+		</div>
 		{% endif %}
 	
 	
