@@ -3,6 +3,10 @@ from django.contrib import admin
 from Commercial import urls, login_urls
 from Manager import url as urls_manager
 
+
+handler404 = 'Manager.views.custom_404'
+handler500 = 'Manager.views.custom_500'
+
 urlpatterns = [
     # Examples:
     # url(r'^$', 'Call4Rdv.views.home', name='home'),

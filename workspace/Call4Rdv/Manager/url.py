@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from Manager import views
 
-
 urlpatterns = [
     
     url(r'dashboard', views.ManagerDashboard, name="dashboard"),

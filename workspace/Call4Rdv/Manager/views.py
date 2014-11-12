@@ -10,6 +10,13 @@ from django.views import generic
 
 # Create your views here.
 
+def custom_404(request):
+    return render_to_response('Manager/html/templates/404.html', RequestContext(request))
+
+def custom_500(request):
+    return render_to_response('Manager/html/templates/500.html', RequestContext(request))
+
+
 def ManagerDashboard(request):
     return render_to_response("Manager/html/Dashboard/index.html",context_instance=RequestContext(request))
 
