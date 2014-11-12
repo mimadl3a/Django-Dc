@@ -52,7 +52,7 @@ class UpdateRegisteredCommercial(generic.UpdateView):
 
     
     
-
+"""
 
 def ManagerCreateCommercial(request):
     formulaire = CommercialForm()
@@ -88,7 +88,7 @@ def ManagerUpdateCommercial(request, idCommercial):
     
     return render_to_response("Manager/html/Commercial/modifier.html",{'formulaire':formulaire},
                               context_instance=RequestContext(request))
-
+"""
 
 def ManagerDeleteCommercial(request):
     return ""

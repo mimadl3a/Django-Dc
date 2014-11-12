@@ -8,8 +8,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-import boto
-from postman.__main__ import out
+from django.core.mail import send_mail
 
 # Create your views here.
 
@@ -202,19 +201,9 @@ def CommandeCreate(request):
 @login_required(login_url='/login/step1')
 def CalendrierIndex(request):
     
-    #ses = boto.connect_ses("key1", "key2")
-    
-    #msg = "test"
-    #r = ses.send_raw_email("rhdatacv@gmail.com", msg, "rhdatacv@gmail.com")
-    #if r.get("SendRawEmailResponse", {}).get("SendRawEmailResult", {}).get("MessageId"):
-        #out("OK", args)
-    #    return ""
-    #else:
-    #    return ""
-        #out("ERROR: %s" % r, args)
-    
-    
-    
+    """send_mail('Subject here', 'Here is the message.', 'notifications@data-shore.com',
+    ['rhdatacv@gmail.com'], fail_silently=False)"""
+        
     liste_event = Calendrier.objects.all()
     data = """ """
     for event in liste_event:

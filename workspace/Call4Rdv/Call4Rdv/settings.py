@@ -98,6 +98,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
+EMAIL_BACKEND = 'django_ses.SESBackend'
+EMAIL_FROM = 'notifications@data-shore.com'
+
+# These are optional -- if they're set as environment variables they won't
+# need to be set here as well
+AWS_ACCESS_KEY_ID = 'keys1'
+AWS_SECRET_ACCESS_KEY = 'keys2'
+
+# Additionally, you can specify an optional region, like so:
+AWS_SES_REGION_NAME = 'us-east-1'
+AWS_SES_REGION_ENDPOINT = 'email.us-east-1.amazonaws.com'
 
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 

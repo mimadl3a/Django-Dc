@@ -63,7 +63,7 @@ class RegistrationForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.layout = Layout()
         self.helper.add_input(Submit('submit', 'Valider'))
-        self.helper.html5_required = False
+        self.helper.html5_required = True
 
     def get_absolute_url(self):
         return reverse('indexCommercial')
