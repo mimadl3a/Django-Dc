@@ -49,7 +49,8 @@ def Mlogout(request):
 
 
 
-
+def fonction_test(*vars1, **varss):
+    return "Ceci est un test: "+str(varss)+str(vars1)
 
 
 
@@ -57,7 +58,16 @@ def Mlogout(request):
 
 
 def dashboard(request):
+    tab = [10,20,30,40,50,60,70,80,90,100]
+    tab = [(el / 2)+1 for el in tab]
+    
+    liste_origine = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    liste_modif = [nb for nb in liste_origine if nb % 2 == 0]
+    
+    autre = fonction_test('11111','22222',a='aaaa', b='bbb')
+    
     return render_to_response("Commercial/html/dashboard.html",
+                              {'tab':tab,'liste_modif':liste_modif,'autre':autre},
                               context_instance=RequestContext(request))
 
 

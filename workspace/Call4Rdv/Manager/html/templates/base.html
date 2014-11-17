@@ -157,7 +157,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li {% if 'dashboard' in request.get_full_path %}class="active" {% endif %}>
-                        <a href="{% url 'dashboard' %}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a href="{% url 'dashboardManager' %}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
                     <li {% if 'commercial/index' in request.get_full_path %}class="active" {% endif %}>
                         <a href="{% url 'indexCommercial' %}"><i class="fa fa-user"></i> Gestion des commerciaux</a>

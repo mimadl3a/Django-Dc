@@ -3,7 +3,7 @@ from Manager import views
 
 urlpatterns = [
     
-    url(r'dashboard', views.ManagerDashboard, name="dashboard"),
+    url(r'dashboardManager', views.ManagerDashboard, name="dashboardManager"),
     url(r'commercial/index', views.ManagerIndexCommercial, name="indexCommercial"),
     url(r'commercial/search', views.ManagerSearchCommercial, name="searchCommercial"),
     #url(r'commercial/create', views.ManagerCreateCommercial, name="createCommercial"),
