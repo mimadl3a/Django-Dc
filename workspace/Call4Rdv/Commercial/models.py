@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 
@@ -17,7 +18,7 @@ class Client(models.Model):
 
 class Commande(models.Model):
     code = models.CharField(max_length=255, null = False)
-    dateCommande = models.DateTimeField(null = False)
+    dateCommande = models.DateTimeField(null = False, default = datetime.now())
     dateReglement = models.DateTimeField(null = True)
     preuveReglement =models.CharField(max_length = 255, null = True)
     totalTTC = models.FloatField(null = False)
@@ -27,6 +28,7 @@ class Commande(models.Model):
     objections = models.TextField(null = False)
     plageHoraire = models.TextField(null = False)
     client = models.ForeignKey(Client)
+    
     
     def __unicode__(self):
         return self.code+" "+self.dateCommande.strftime('%Y-%m-%d')

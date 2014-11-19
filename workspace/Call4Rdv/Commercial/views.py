@@ -187,7 +187,7 @@ def CommandeCreate(request):
     
     #mform = ExampleForm()
         
-    f = get_form_cmd(['dateReglement','preuveReglement'])
+    f = get_form_cmd(['dateReglement','preuveReglement','dateCommande'])
     formulaire = f()
     
     

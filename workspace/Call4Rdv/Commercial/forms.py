@@ -5,6 +5,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder
 from django import forms
 from suit_ckeditor.widgets import CKEditorWidget
+from captcha.fields import ReCaptchaField
 
 
 class ClientForm(ModelForm):
@@ -71,6 +72,7 @@ def get_form_cmd(liste, *args):
         
     
 class LoginForm(AuthenticationForm):
+    captcha = ReCaptchaField(attrs={'theme' : 'white'})
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -80,7 +82,8 @@ class LoginForm(AuthenticationForm):
                                         'Authentification',
                                         'username',
                                         'Mot de passe',
-                                        'password'
+                                        'password',
+                                        'captcha',
                                     ),
                                         ButtonHolder(
                                             Submit('submit', 'Valider'),

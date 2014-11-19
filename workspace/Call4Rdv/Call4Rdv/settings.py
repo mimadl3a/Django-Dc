@@ -42,7 +42,12 @@ INSTALLED_APPS = (
     #'debug_toolbar.apps.DebugToolbarConfig',
     'crispy_forms',
     'fullcalendar',
+    'captcha',
 )
+
+
+RECAPTCHA_PUBLIC_KEY = '6LcZBf4SAAAAAJtLwXK1Ml7SV7x45ZrLDcw8m7o5'
+RECAPTCHA_PRIVATE_KEY = '6LcZBf4SAAAAANqQPiwujvtRODb6AVIwjhJPweQu'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
