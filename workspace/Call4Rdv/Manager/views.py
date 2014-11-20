@@ -24,7 +24,7 @@ def ManagerDashboard(request):
 
 def ManagerIndexCommercial(request):
     page = 1
-    if request.method == 'GET':   
+    if request.method == 'REQUEST':   
         page = request.REQUEST['page']
     
     
@@ -37,7 +37,9 @@ def ManagerIndexCommercial(request):
 def ManagerSearchCommercial(request):
     all_ = Commercial.objects.all()
     paginator = Paginator(all_, 5)
-    page = request.REQUEST['page']
+    page = 1
+    if request.method == 'REQUEST':   
+        page = request.REQUEST['page']
     
     #return HttpResponse(page)
     
