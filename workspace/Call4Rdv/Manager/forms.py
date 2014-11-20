@@ -1,5 +1,5 @@
-from django.contrib.auth.forms import UserCreationForm
-from crispy_forms.layout import Layout, Submit
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from crispy_forms.layout import Layout, Submit, Fieldset, ButtonHolder
 from crispy_forms.helper import FormHelper
 from Manager.models import Commercial
 from django.forms.models import ModelForm
@@ -7,8 +7,27 @@ from django import forms
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
+from captcha.fields import ReCaptchaField
 
-
+    
+class LoginForm(AuthenticationForm):
+    captcha = ReCaptchaField(attrs={'theme' : 'white'})
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_action = "Managerlogin"
+        self.helper.layout = Layout(
+                                    Fieldset(
+                                        'Authentification',
+                                        'username',
+                                        'password',
+                                        'captcha',
+                                    ),
+                                        ButtonHolder(
+                                            Submit('submit', 'Valider'),
+                                        )
+                                    
+                                    )
 
 class CommercialForm(UserCreationForm):
     def __init__(self, *args, **kwargs):

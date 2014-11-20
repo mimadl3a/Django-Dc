@@ -2,12 +2,15 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from Manager.models import Commercial
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from Manager.forms import CommercialForm, RegistrationForm, CommercialUpdateForm
+from Manager.forms import CommercialForm, RegistrationForm, CommercialUpdateForm,\
+    LoginForm
 from django.core.urlresolvers import reverse
 from exceptions import Exception
 from django.contrib import messages
 from django.views import generic
 from django.http.response import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -18,6 +21,49 @@ def custom_500(request):
     return render_to_response('Manager/html/templates/500.html', RequestContext(request))
 
 
+
+
+
+def Managerlogin(request):
+    #INIT FORM TO TEMPLATE
+    form = LoginForm()
+    
+    #IF DATA IS SENT
+    if request.method == 'POST':
+        #PASS DATA FORM LOGIN FORM TO HANDLE IT
+        form = LoginForm(data = request.POST)
+        if form.is_valid():
+            login1 = request.POST['username']
+            pass1 = request.POST['password']
+            
+            user = authenticate(username=login1, password=pass1)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect(reverse(ManagerDashboard))
+            else:
+                messages.add_message(request, messages.INFO, "Utilisateur introuvable")
+                return redirect(reverse(Managerlogin))
+        else:
+            messages.add_message(request, messages.INFO, "Formulaire invalide")
+            
+    
+    return render_to_response("Manager/html/Login/index.html",{'formulaire':form},
+                              context_instance=RequestContext(request))
+
+
+def Managerlogout(request):
+    logout(request)
+    messages.add_message(request, messages.INFO, "A bientot !")
+    return redirect(reverse(Managerlogin))
+    
+
+
+
+
+
+
+@login_required(login_url='Managerlogin/step1')
 def ManagerDashboard(request):
     return render_to_response("Manager/html/Dashboard/index.html",context_instance=RequestContext(request))
 

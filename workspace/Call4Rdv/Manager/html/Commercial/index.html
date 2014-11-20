@@ -105,7 +105,7 @@
 		$.ajax({
 			type: "POST",
 			url: "{% url 'searchCommercial' %}",
-			data: { info: $('#info').val(), page: 1, csrfmiddlewaretoken : $("input[name=csrfmiddlewaretoken]").val() },
+			data: { info: $('#info').val(), page: {{ page }}, csrfmiddlewaretoken : $("input[name=csrfmiddlewaretoken]").val() },
 			success: function(data){
 				$('#spinner').hide();
 				$("#divi").html(data);
