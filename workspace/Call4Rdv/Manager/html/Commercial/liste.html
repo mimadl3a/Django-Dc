@@ -22,12 +22,16 @@
 		{% endif %}
 		-->
 		
+		
+		
+		
 		{% for i in liste.paginator.page_range %}
-			{% if i == liste.number %}
-				<li><a href="?page={{ i }}">{{ i }}</a></li>
-			{% else %}
-				<li><a href="?page={{ i }}">{{ i }}</a></li>
-			{% endif %}
+		
+			
+			<li {% if page == i %} class="active" {% endif %}>
+				<a {% if page != i %} href="?page={{ i }}" {% endif %}>{{ i }}</a>
+			</li>
+			
 		{% endfor %}
 
 		<!-- 

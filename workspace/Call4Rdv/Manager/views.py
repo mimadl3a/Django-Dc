@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from exceptions import Exception
 from django.contrib import messages
 from django.views import generic
+from django.http.response import HttpResponse
 
 # Create your views here.
 
@@ -22,13 +23,23 @@ def ManagerDashboard(request):
 
 
 def ManagerIndexCommercial(request):
-    return render_to_response("Manager/html/Commercial/index.html",context_instance=RequestContext(request))
+    page = 1
+    if request.method == 'GET':   
+        page = request.REQUEST['page']
+    
+    
+    return render_to_response("Manager/html/Commercial/index.html",
+                              {'page':int(page)},
+                              context_instance=RequestContext(request)
+                              )
 
 
 def ManagerSearchCommercial(request):
     all_ = Commercial.objects.all()
     paginator = Paginator(all_, 5)
-    page = request.GET.get('page')
+    page = request.REQUEST['page']
+    
+    #return HttpResponse(page)
     
     try:
         liste = paginator.page(page)
@@ -39,7 +50,7 @@ def ManagerSearchCommercial(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         liste = paginator.page(paginator.num_pages)
     
-    return render_to_response("Manager/html/Commercial/liste.html", {'liste':liste},
+    return render_to_response("Manager/html/Commercial/liste.html", {'liste':liste, 'page':int(page)},
                               context_instance=RequestContext(request))
 
 class RegisterCommercial(generic.CreateView):

@@ -81,7 +81,6 @@ class LoginForm(AuthenticationForm):
                                     Fieldset(
                                         'Authentification',
                                         'username',
-                                        'Mot de passe',
                                         'password',
                                         'captcha',
                                     ),
