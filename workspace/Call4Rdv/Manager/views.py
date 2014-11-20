@@ -70,8 +70,12 @@ def ManagerDashboard(request):
 
 def ManagerIndexCommercial(request):
     page = 1
-    if request.method == 'REQUEST':   
-        page = request.REQUEST['page']
+    try:
+        if request.method == 'GET':   
+            page = request.GET['page']
+    except:
+        page = 1
+    
     
     
     return render_to_response("Manager/html/Commercial/index.html",
@@ -83,11 +87,8 @@ def ManagerIndexCommercial(request):
 def ManagerSearchCommercial(request):
     all_ = Commercial.objects.all()
     paginator = Paginator(all_, 5)
-    page = 1
-    if request.method == 'REQUEST':   
-        page = request.REQUEST['page']
+    page = request.REQUEST['page']
     
-    #return HttpResponse(page)
     
     try:
         liste = paginator.page(page)
