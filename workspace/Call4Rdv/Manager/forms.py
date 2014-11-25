@@ -1,13 +1,15 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from crispy_forms.layout import Layout, Submit, Fieldset, ButtonHolder
 from crispy_forms.helper import FormHelper
-from Manager.models import Commercial
+from Manager.models import Commercial, DataCommercial
 from django.forms.models import ModelForm
 from django import forms
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from captcha.fields import ReCaptchaField
+import csv
+from django.db import connection
 
     
 class LoginForm(AuthenticationForm):
@@ -88,7 +90,7 @@ class RegistrationForm(forms.ModelForm):
         return reverse('indexCommercial')
     class Meta:
         model = Commercial
-        fields = ['nom','username','email','password1']
+        fields = ['data','nom','username','email','password1']
 
     def clean(self):
         """
@@ -107,7 +109,40 @@ class RegistrationForm(forms.ModelForm):
         if 'password1' in self.cleaned_data and self.cleaned_data['password1']:
             user.set_password(self.cleaned_data['password1'])
         if commit:
-            user.save()          
+            user.save()
+            records = csv.reader(self.cleaned_data["data"],delimiter=';')
+            cursor = connection.cursor()
+            for line in records:
+                Civ         = line[0]
+                Nom         = line[1]
+                Prenom      = line[2]
+                Adresse1    = line[3]
+                Adresse2    = line[4]
+                Adresse3    = line[5]
+                Adresse4    = line[6]
+                Cp          = line[7]
+                Ville       = line[8]
+                Email       = line[9]
+                cursor.execute("INSERT INTO Manager_datacommercial VALUES(null"
+                                ",'"+Civ+"'"
+                                ",'"+Nom+"'"
+                                ",'"+Prenom+"'"
+                                ",'"+Adresse1+"'"
+                                ",'"+Adresse2+"'"
+                                ",'"+Adresse3+"'"
+                                ",'"+Adresse4+"'"
+                                ",'"+Cp+"'"
+                                ",'"+Ville+"'"
+                                ",'"+Email+"'"
+                                +")")
+                """d = DataCommercial(Civ = line[0],Nom = line[1],Prenom = line[2],Adresse1 = line[3],
+                                   Adresse2 = line[4],
+                                   Adresse3 = line[5],
+                                   Adresse4 = line[6],
+                                   Cp = line[7],
+                                   Ville = line[8],
+                                   Email = line[9])
+                d.save()"""
         return user
 
 
