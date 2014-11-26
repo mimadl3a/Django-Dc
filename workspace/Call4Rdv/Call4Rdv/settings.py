@@ -43,7 +43,16 @@ INSTALLED_APPS = (
     'crispy_forms',
     'fullcalendar',
     'captcha',
+    'rest_framework',
 )
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 
 RECAPTCHA_PUBLIC_KEY = '6LcZBf4SAAAAAJtLwXK1Ml7SV7x45ZrLDcw8m7o5'

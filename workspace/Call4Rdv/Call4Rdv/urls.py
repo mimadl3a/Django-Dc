@@ -3,6 +3,7 @@ from django.contrib import admin
 from Commercial import urls, login_urls
 from Manager import url as urls_manager
 from Manager import login_urls as urls_manager_login
+from api import urls as api_url
 
 
 handler404 = 'Manager.views.custom_404'
@@ -13,6 +14,7 @@ urlpatterns = [
     # url(r'^$', 'Call4Rdv.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
     
+    url(r'^api/', include(api_url)),
     
     url(r'^login/', include(login_urls)),
     
