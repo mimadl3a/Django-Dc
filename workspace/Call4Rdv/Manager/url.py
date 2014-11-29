@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from Manager import views
 
+
 urlpatterns = [
     
     url(r'dashboardManager', views.ManagerDashboard, name="dashboardManager"),
@@ -11,5 +12,5 @@ urlpatterns = [
     #url(r'commercial/modifier/(?P<idCommercial>[0-9]+)', views.ManagerUpdateCommercial, name='updateCommercial'),
     url(r'commercial/modifier/(?P<pk>\d+)', views.UpdateRegisteredCommercial.as_view(), name='updateCommercial'),
     url(r'commercial/supprimer/(?P<idCommercial>[0-9]+)', views.ManagerDeleteCommercial, name='deleteCommercial'),
-       
+           
 ]

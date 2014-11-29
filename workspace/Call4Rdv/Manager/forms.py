@@ -73,18 +73,22 @@ class RegistrationForm(forms.ModelForm):
     """
     Form for registering a new account.
     """
+    nom = forms.CharField(widget=forms.TextInput, label="Nom", help_text='Ceci est un help text')
     email = forms.EmailField(widget=forms.TextInput,label="Email")
     username = forms.CharField(widget=forms.TextInput, label="Utilisateur")
-    nom = forms.CharField(widget=forms.TextInput, label="Nom")
     password1 = forms.CharField(widget=forms.TextInput,label="Mot de passe", required=False)
-    #password2 = forms.CharField(widget=forms.PasswordInput, label="Retapez le mot de passe")
     
     def __init__(self, *args, **kwargs):
+        """initial = kwargs.get('initial', {})
+        initial['nom'] = 'initial_name'
+        kwargs['initial'] = initial"""
+        
         super(RegistrationForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout()
         self.helper.add_input(Submit('submit', 'Valider'))
         self.helper.html5_required = True
+        
 
     def get_absolute_url(self):
         return reverse('indexCommercial')

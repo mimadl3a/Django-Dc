@@ -2,16 +2,13 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from Manager.models import Commercial
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from Manager.forms import CommercialForm, RegistrationForm, CommercialUpdateForm,\
-    LoginForm
+from Manager.forms import RegistrationForm, LoginForm
 from django.core.urlresolvers import reverse
-from exceptions import Exception
 from django.contrib import messages
-from django.views import generic
-from django.http.response import HttpResponse
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-import csv
+
 
 # Create your views here.
 
@@ -22,7 +19,7 @@ def custom_500(request):
     return render_to_response('Manager/html/templates/500.html', RequestContext(request))
 
 
-
+    
 
 
 def Managerlogin(request):
@@ -103,15 +100,20 @@ def ManagerSearchCommercial(request):
     return render_to_response("Manager/html/Commercial/liste.html", {'liste':liste, 'page':int(page)},
                               context_instance=RequestContext(request))
 
-class RegisterCommercial(generic.CreateView):
+class RegisterCommercial(CreateView):
+    #recuperer objet
+    mon_objet = Commercial.objects.get(pk=11)
+    
     form_class = RegistrationForm
     model = Commercial
+    #initier le nom par valeur objet
+    initial = {'nom':mon_objet.nom}
     template_name = "Manager/html/Commercial/ajouter.html"
     #success_url = reverse(ManagerIndexCommercial);
 
 
     
-class UpdateRegisteredCommercial(generic.UpdateView):
+class UpdateRegisteredCommercial(UpdateView):
     form_class = RegistrationForm
     model = Commercial
     template_name = "Manager/html/Commercial/modifier.html"
